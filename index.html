@@ -1,7 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="refresh" content="0; URL=https://olauncher.lol">
-</head>
-<body></body>
-</html>
+---
+layout: news
+title: Minecraft News
+---
+
+{% for post in site.posts limit:10 %}
+  <div style="margin-top:16px">
+    <h3><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h3>
+    <div class="content">
+      {{ post.content }}
+    </div>
+  </div>
+{% endfor %}
