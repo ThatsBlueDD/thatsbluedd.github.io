@@ -39,8 +39,6 @@ Before you begin these steps, it is recommended that you [back up your worlds](0
    </span>
 
    If the version you want to play does not appear, try enabling snapshots, old alpha &amp; beta, or custom versions.
-
-   _Note_: When choosing to use the latest version, modded versions can sometimes be selected. This is a [known issue](https://github.com/olauncher/olauncher/issues/62).
 3. Click **Save Profile**.
    
    And you're done! If you launch this profile, the version of the game you selected should be downloaded and run.
