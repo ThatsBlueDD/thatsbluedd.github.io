@@ -26,7 +26,7 @@ If the launcher is able to make it past the login screen, the launcher logs are 
    **Figure 2**: Run window
    </span>
 
-2. Run `java -jar C:\path\to\olauncher.jar`.
+2. Run `java -jar C:\path\to\launcher.jar`.
    
    As a shortcut, you may enter the full path of the jarfile by dragging it onto the Command Prompt window.
 
