@@ -4,7 +4,7 @@
       {% assign prev-page-idx = forloop.index0 | minus: 1 %}
       <a href="{{ site.manual.pages[prev-page-idx].name }}" style="float: left;">Previous</a>
     {% endunless %}
-    OLauncher Manual
+    Legacy Launcher Manual
     {% unless forloop.last %}
       {% assign next-page-idx = forloop.index0 | plus: 1 %}
       <a href="{{ site.manual.pages[next-page-idx].name }}" style="float: right;">Next</a>
