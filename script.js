@@ -3,7 +3,7 @@ const video = document.getElementById("video");
 const videos = [
     "sbr.mp4",
     "sc.mp4",
-    "videos/bd%20%281%29.mp4"
+    "videos/bds (1).mp4"
 ];
 
 let lastVideo = null;
