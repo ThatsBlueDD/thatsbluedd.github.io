@@ -1,10 +1,22 @@
 const video = document.getElementById("video");
 
 const videos = [
-    "sbr.mp4",
-    "sc.mp4",
-    "videos/bds (1).mp4",
-    "videos/urabadapple.mp4"
+    {
+        video: "sbr.mp4",
+        audio: "sbr.ogg"
+    },
+    {
+        video: "sc.mp4",
+        audio: "sc.ogg"
+    },
+    {
+        video: "videos/bds (1).mp4",
+        audio: "bds.ogg"
+    },
+    {
+        video: "videos/urabadapple.mp4",
+        audio: "urabadapple.ogg"
+    }
 ];
 
 let lastVideo = null;
@@ -34,45 +46,64 @@ function status(message) {
     element.textContent = message;
 }
 
+function playMinecraftAudio(audioFile) {
+    if (typeof fancymenu === "undefined") {
+        status("FANCYMENU API NOT READY");
+        return;
+    }
+
+    const audioConfig = JSON.stringify({
+        audioSource: `[source:local]/config/fancymenu/assets/${audioFile}`,
+        soundChannel: "master",
+        baseVolume: 1.0
+    });
+
+    fancymenu.actions.execute("play_audio", audioConfig);
+
+    status("PLAYING AUDIO: " + audioFile);
+}
+
+function stopMinecraftAudio() {
+    if (typeof fancymenu === "undefined") {
+        return;
+    }
+
+    fancymenu.actions.execute("stop_all_action_audios");
+}
+
 function playRandomVideo() {
-    let nextVideo;
+    let next;
 
     do {
-        nextVideo = videos[Math.floor(Math.random() * videos.length)];
-    } while (videos.length > 1 && nextVideo === lastVideo);
+        next = videos[Math.floor(Math.random() * videos.length)];
+    } while (videos.length > 1 && next === lastVideo);
 
-    lastVideo = nextVideo;
-
-    video.src = nextVideo;
+    lastVideo = next;
+    stopMinecraftAudio();
+    video.src = next.video;
     video.muted = true;
-
     video.play().catch(error => {
         status("VIDEO PLAY FAILED: " + error);
     });
+
+    playMinecraftAudio(next.audio);
 }
-
-document.addEventListener("click", async () => {
-    status("CLICK DETECTED");
-
-    video.muted = false;
-    video.volume = 1.0;
-
-    try {
-        await video.play();
-        status("AUDIO PLAYBACK SUCCESS");
-    } catch (error) {
-        status("AUDIO PLAYBACK FAILED: " + error);
-    }
-}, { once: true });
 
 video.addEventListener("ended", playRandomVideo);
 
 document.addEventListener("visibilitychange", () => {
     if (document.hidden) {
         video.pause();
+        stopMinecraftAudio();
     } else {
         video.play().catch(() => {});
     }
 });
 
-playRandomVideo();
+if (typeof fancymenu !== "undefined") {
+    playRandomVideo();
+} else {
+    window.addEventListener("fancymenu-ready", () => {
+        playRandomVideo();
+    }, { once: true });
+}
