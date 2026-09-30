@@ -1,10 +1,10 @@
 const video = document.getElementById("video");
 
 const videos = [
-    "sbr.mp4",
-    "sc.mp4",
-    "videos/bds (1).mp4",
-    "videos/urabadapple.mp4"
+    "sbr.webm",
+    "sc.webm",
+    "videos/bds.webm",
+    "videos/urabadapple.webm"
 ];
 
 let lastVideo = null;
