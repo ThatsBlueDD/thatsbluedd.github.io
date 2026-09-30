@@ -7,7 +7,31 @@ const videos = [
 ];
 
 let lastVideo = null;
-let hasInteracted = false;
+
+function status(message) {
+    let element = document.getElementById("status");
+
+    if (!element) {
+        element = document.createElement("div");
+        element.id = "status";
+
+        Object.assign(element.style, {
+            position: "fixed",
+            top: "10px",
+            left: "10px",
+            zIndex: "9999",
+            color: "white",
+            background: "rgba(0, 0, 0, 0.8)",
+            padding: "10px",
+            fontFamily: "monospace",
+            fontSize: "16px"
+        });
+
+        document.body.appendChild(element);
+    }
+
+    element.textContent = message;
+}
 
 function playRandomVideo() {
     let nextVideo;
@@ -19,21 +43,26 @@ function playRandomVideo() {
     lastVideo = nextVideo;
 
     video.src = nextVideo;
-    video.muted = !hasInteracted;
+    video.muted = true;
 
-    video.play().catch(() => {});
+    video.play().catch(error => {
+        status("VIDEO PLAY FAILED: " + error);
+    });
 }
 
-function enableAudio() {
-    if (hasInteracted) return;
+document.addEventListener("click", async () => {
+    status("CLICK DETECTED");
 
-    hasInteracted = true;
     video.muted = false;
+    video.volume = 1.0;
 
-    video.play().catch(() => {});
-}
-
-document.addEventListener("click", enableAudio, { once: true });
+    try {
+        await video.play();
+        status("AUDIO PLAYBACK SUCCESS");
+    } catch (error) {
+        status("AUDIO PLAYBACK FAILED: " + error);
+    }
+}, { once: true });
 
 video.addEventListener("ended", playRandomVideo);
 
