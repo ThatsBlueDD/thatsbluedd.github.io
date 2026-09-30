@@ -24,25 +24,16 @@ function playRandomVideo() {
     video.play().catch(() => {});
 }
 
-async function enterMenu() {
+function enableAudio() {
     if (hasInteracted) return;
 
     hasInteracted = true;
     video.muted = false;
 
-    try {
-        await video.play();
-    } catch {
-        video.muted = true;
-    }
-
-    try {
-        await document.documentElement.requestFullscreen();
-    } catch {
-    }
+    video.play().catch(() => {});
 }
 
-document.addEventListener("click", enterMenu, { once: true });
+document.addEventListener("click", enableAudio, { once: true });
 
 video.addEventListener("ended", playRandomVideo);
 
